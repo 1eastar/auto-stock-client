@@ -1,13 +1,16 @@
-import React, { useEffect, useCallback, useState, useMemo } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 
 import upbitSelector from '../redux/selectors/upbitSelector'
 import upbitActions, { Period } from '../redux/actions/upbitActions'
 
+type candleTypes = 'minute' | 'DWM'
+
 function App() {
   const dispatch = useDispatch()
 
+  const [candleType, setCandleType] = useState<candleTypes>('minute')
   const [DWM, setDWM] = useState<Period>('days')
   const [unit, setUnit] = useState<number>(1)
   const [market, setMarket] = useState<string>('')
@@ -25,21 +28,23 @@ function App() {
     }
   }, [])
 
-  const handleClickDWM = useCallback(() => {
-    const payload = {
-      DWM,
-      count,
-    }
-    if (!_.isEmpty(market)) {
-      _.set(payload, 'market', market)
-    }
-    dispatch(upbitActions.requestGetDWMCandle(payload))
+  const handleClick = useCallback(() => {
+    const payload = (() => {
+      const tmp = { count }
+      if (candleType === 'minute') { _.set(tmp, 'unit', unit) }
+      else { _.set(tmp, 'DWM', DWM) }
+      if (!_.isEmpty(market)) { _.set(tmp, 'market', market) }
+      return tmp
+    })()
+
+    const action = (candleType === 'minute') ? upbitActions.requestGetMinuteCandle : upbitActions.requestGetDWMCandle
+    dispatch(action(payload))
       .promise
       .then((res) => {
         console.log(res)
         setCandleList(res.payload)
       })
-  }, [dispatch, DWM, count, market])
+  }, [dispatch, DWM, count, market, candleType])
 
   const headerColumn = useMemo(() => {
     if (_.isEmpty(candleList)) { return }
@@ -50,22 +55,30 @@ function App() {
   // TODO: 데이터 확인을 위한 임시 코드, 추후 리팩토링 필요
   return (
     <div>
-      hihihhhihihihi
+      <h3>UPBIT stock data test</h3>
       <div>
-        <label><input type="checkbox" name="days" onClick={() => setDWM('days')}/> days</label>
-        <label><input type="checkbox" name="weeks" onClick={() => setDWM('weeks')}/> weeks</label>
-        <label><input type="checkbox" name="months" onClick={() => setDWM('months')}/> months</label>
+        <span onClick={() => setCandleType('minute')}>Minute Candle |</span>
+        <span onClick={() => setCandleType('DWM')}>| DWM Candle</span>
       </div>
-      <div>
-        <span>Unit: </span>
-        <input
-          name='unit'
-          onChange={handleInputChange}
-          value={unit}
-          disabled={isLoading}
-          placeholder='set unit'
-        />
-      </div>
+      <br/>
+      { (candleType === 'DWM') ? (
+        <div>
+          <label><input type="checkbox" name="days" onClick={() => setDWM('days')}/> days</label>
+          <label><input type="checkbox" name="weeks" onClick={() => setDWM('weeks')}/> weeks</label>
+          <label><input type="checkbox" name="months" onClick={() => setDWM('months')}/> months</label>
+        </div>
+      ) : (
+        <div>
+          <span>Unit: </span>
+          <input
+            name='unit'
+            onChange={handleInputChange}
+            value={unit}
+            disabled={isLoading}
+            placeholder='set unit'
+          />
+        </div>
+      ) }
       <div>
         <span>Market: </span>
         <input
@@ -89,9 +102,9 @@ function App() {
 
       <button
         disabled={isLoading}
-        onClick={handleClickDWM}
+        onClick={handleClick}
       >
-        get DWM data
+        get {candleType === 'minute' ? 'Minute Candle' : 'DWM Candle'} data
       </button>
 
       <hr/>
