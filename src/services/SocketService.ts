@@ -3,7 +3,7 @@ import { v4 as UUID } from 'uuid'
 import { autobind } from 'core-decorators'
 import _ from 'lodash'
 
-import WebSocketState from '../constants/WebSocketState'
+import WebSocketState from 'Constants/WebSocketState'
 
 const WS_BASE_URL = 'wss://api.upbit.com/websocket/v1'
 const mockEmitData = JSON.stringify([{"ticket":"test"},{"type":"ticker","codes":["KRW-BTC"]}])

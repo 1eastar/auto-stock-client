@@ -2,11 +2,10 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 
-import upbitSelector from '../redux/selectors/upbitSelector'
-import upbitActions, { Period } from '../redux/actions/upbitActions'
-import WebSocketActions from '../redux/actions/WebSocketActions'
-import SocketService from '../services/SocketService'
-import UpbitTicker from '../models/UpbitTicker'
+import upbitSelector from 'Redux/selectors/upbitSelector'
+import upbitActions, { Period } from 'Redux/actions/upbitActions'
+import WebSocketActions from 'Redux/actions/WebSocketActions'
+import SocketService from 'Services/SocketService'
 
 type candleTypes = 'minute' | 'DWM'
 

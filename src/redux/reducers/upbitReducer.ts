@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import _ from 'lodash'
 
-import AT from '../../constants/ActionTypes'
-import UpbitTicker from '../../models/UpbitTicker'
+import AT from 'Constants/ActionTypes'
+import UpbitTicker from 'Models/UpbitTicker'
 
 interface UpbitReducerState {
   isFetching: boolean

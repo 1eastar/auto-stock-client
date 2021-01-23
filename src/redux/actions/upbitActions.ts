@@ -1,7 +1,7 @@
-import AT from '../../constants/ActionTypes'
-import { actionCreator, actionCreatorWithPromise } from '../../utils/ReduxUtils'
-import { MainAction } from '../../types/Redux'
-import UpbitTicker from '../../models/UpbitTicker'
+import AT from 'Constants/ActionTypes'
+import { actionCreator, actionCreatorWithPromise } from 'Utils/ReduxUtils'
+import { MainAction } from 'Types/Redux'
+import UpbitTicker from 'Models/UpbitTicker'
 
 export type Period = 'days' | 'weeks' | 'months'
 

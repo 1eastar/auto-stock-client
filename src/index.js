@@ -3,8 +3,8 @@ import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import _ from 'lodash'
 
-import App from './containers/App'
-import ReduxService from './services/ReduxService'
+import ReduxService from 'Services/ReduxService'
+import App from 'Containers/App'
 
 const rootElement = document.getElementById('root')
 

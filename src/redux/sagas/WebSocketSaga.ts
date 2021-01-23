@@ -1,10 +1,10 @@
 import { takeLatest, put, fork, call, take } from 'redux-saga/effects'
 import _ from 'lodash'
 
-import AT from '../../constants/ActionTypes'
-import UpbitActions from '../actions/upbitActions'
-import SocketService from '../../services/SocketService'
-import { createWebSocketMessageChannel } from '../../utils/WebSocketUtils'
+import AT from 'Constants/ActionTypes'
+import UpbitActions from 'Redux/actions/upbitActions'
+import SocketService from 'Services/SocketService'
+import { createWebSocketMessageChannel } from 'Utils/WebSocketUtils'
 
 function* watchRealTimeDataSaga() {
   const channel = yield call(createWebSocketMessageChannel)

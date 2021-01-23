@@ -1,6 +1,6 @@
 import { eventChannel } from 'redux-saga'
 
-import SocketService from '../services/SocketService'
+import SocketService from 'Services/SocketService'
 
 /*
  * socket.io-client package를 위한 유틸리티 함수였지만 해당 패키지를 사용할 수 없게 되어

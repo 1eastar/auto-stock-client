@@ -1,6 +1,5 @@
 import AT from '../../constants/ActionTypes'
-import { actionCreator, actionCreatorWithPromise } from '../../utils/ReduxUtils'
-import { MainAction } from '../../types/Redux'
+import { actionCreator, actionCreatorWithPromise } from 'Utils/ReduxUtils'
 
 export default {
   connectWebSocket: actionCreator(AT.CONNECT_WEB_SOCKET),

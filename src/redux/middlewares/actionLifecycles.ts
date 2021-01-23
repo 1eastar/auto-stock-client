@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 /* Internal dependencies */
-import CacheService from '../../services/CacheService'
+import CacheService from 'Services/CacheService'
 
 export default () => {
   const pending = CacheService.actionLifecyclesPendingCache

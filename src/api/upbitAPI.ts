@@ -1,8 +1,8 @@
-import client from './lib/client'
+import client from 'Api/lib/client'
 import {
   GetDWMCandleActionPayload,
   GetMinuteCandleActionPayload,
-} from '../redux/actions/upbitActions'
+} from 'Redux/actions/upbitActions'
 
 // NOTE: get Days, Weeks, Months Candle
 export function getDWMCandle({

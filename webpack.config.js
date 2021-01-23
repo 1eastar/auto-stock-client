@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 
-// const resolveAlias = require('./webpack/resolveAlias')
+const resolveAlias = require('./webpack/resolveAlias')
 
 const prod = process.env.NODE_ENV === 'production'
 
@@ -14,7 +14,7 @@ module.exports = {
   entry: './src/index.js',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    // alias: { ...resolveAlias },
+    alias: { ...resolveAlias },
   },
 
   module: {

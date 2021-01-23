@@ -1,15 +1,15 @@
 import { all, takeLatest, takeEvery, call, put } from 'redux-saga/effects'
 import { v4 as UUID } from 'uuid'
 
-import AT from '../../constants/ActionTypes'
+import AT from 'Constants/ActionTypes'
 import upbitActions, {
   GetDWMCandleAction,
   GetMinuteCandleAction,
-} from '../actions/upbitActions'
+} from 'Redux/actions/upbitActions'
 import {
   getDWMCandle,
   getMinuteCandle,
-} from '../../api/upbitAPI'
+} from 'Api/upbitAPI'
 
 function* getDWMCandleSaga({ uuid, payload }: GetDWMCandleAction) {
   try {

@@ -5,9 +5,9 @@ import { enableBatching } from 'redux-batched-actions'
 import compose from 'lodash/fp/compose'
 
 /* Internal Dependencies */
-import actionLifecycles from '../redux/middleWares/actionLifecycles'
-import rootSaga from '../redux/sagas'
-import rootReducer from '../redux/reducers'
+import actionLifecycles from 'Redux/middleWares/actionLifecycles'
+import rootSaga from 'Redux/sagas'
+import rootReducer from 'Redux/reducers'
 
 class ReduxService {
   private store: Store

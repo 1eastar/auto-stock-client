@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-import { RootState } from '../reducers'
+import { RootState } from 'Redux/reducers'
 
 const isFetching = (state: RootState) => state.upbitReducer.isFetching
 

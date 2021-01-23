@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { v4 as UUID } from 'uuid'
 
 /* Internal Dependencies */
-import { ActionFunc, PromisedActionFunc } from '../types/Redux'
+import { ActionFunc, PromisedActionFunc } from 'Types/Redux'
 
 export type ActionGenerator<T, S = {}> = ActionFunc<T, S>
 
