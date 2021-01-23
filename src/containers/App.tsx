@@ -1,11 +1,16 @@
-import React, { useCallback, useState, useMemo } from 'react'
+import React, { useCallback, useState, useMemo, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 
 import upbitSelector from '../redux/selectors/upbitSelector'
 import upbitActions, { Period } from '../redux/actions/upbitActions'
+import WebSocketActions from '../redux/actions/WebSocketActions'
+import SocketService from '../services/SocketService'
+import UpbitTicker from '../models/UpbitTicker'
 
 type candleTypes = 'minute' | 'DWM'
+
+type requestType = 'api' | 'socket'
 
 function App() {
   const dispatch = useDispatch()
@@ -15,9 +20,23 @@ function App() {
   const [unit, setUnit] = useState<number>(1)
   const [market, setMarket] = useState<string>('')
   const [count, setCount] = useState<number>(1)
-  const [candleList, setCandleList] = useState([])
+  const [requestType, setRequestType] = useState<requestType>('api')
 
   const isLoading = useSelector(upbitSelector.isFetching)
+  const tickerList = useSelector(upbitSelector.tickers)
+
+  const handleSocketMessageCallback = useCallback((data) => {
+
+  }, [])
+
+  useEffect(() => {
+    if (requestType === 'socket') {
+      dispatch(WebSocketActions.connectWebSocket({ messageCallback: handleSocketMessageCallback }))
+    } else {
+      SocketService.disconnect()
+    }
+    return () => { SocketService.disconnect() }
+  }, [dispatch, requestType, WebSocketActions, handleSocketMessageCallback])
 
   const handleInputChange = useCallback((e) => {
     switch(e.target.name) {
@@ -42,20 +61,24 @@ function App() {
       .promise
       .then((res) => {
         console.log(res)
-        setCandleList(res.payload)
       })
   }, [dispatch, DWM, count, market, candleType])
 
   const headerColumn = useMemo(() => {
-    if (_.isEmpty(candleList)) { return }
+    if (tickerList.toArray().length === 0) { return null }
 
-    return Object.keys(candleList[0])
-  }, [candleList])
-
+console.log(tickerList.toArray()[0][1])
+    return Object.keys(tickerList.toArray()[0][1])
+  }, [tickerList])
   // TODO: 데이터 확인을 위한 임시 코드, 추후 리팩토링 필요
   return (
     <div>
       <h3>UPBIT stock data test</h3>
+      {(requestType === 'api') ? (
+        <span onClick={() => setRequestType('socket')} style={{ marginLeft: 30 }}>websocket realtime data</span>
+      ) : (
+        <span onClick={() => setRequestType('api')} style={{ marginLeft: 30 }}>rest api data</span>
+      ) }
       <div>
         <span onClick={() => setCandleType('minute')}>Minute Candle |</span>
         <span onClick={() => setCandleType('DWM')}>| DWM Candle</span>
@@ -108,7 +131,7 @@ function App() {
       </button>
 
       <hr/>
-      { !!(candleList) && (
+      { (tickerList.toArray().length !== 0) && (
         <table>
           <thead>
             <tr style={{fontSize: 11, fontWeight: 400}}>
@@ -118,8 +141,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            { candleList.map((candle, i) => {
-              const rowValues = Object.values<string>(candle)
+            { tickerList.map((ticker, i) => {
+              const rowValues = Object.values<string>(ticker.toJS())
               return (
                 <tr key={i} style={{fontSize: 11, fontWeight: 400}}>
                   { rowValues.map((v, i) => (

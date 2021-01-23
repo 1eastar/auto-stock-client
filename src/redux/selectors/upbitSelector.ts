@@ -6,10 +6,10 @@ const isFetching = (state: RootState) => state.upbitReducer.isFetching
 
 const hasError = (state: RootState) => state.upbitReducer.hasError
 
-const candle = (state: RootState) => state.upbitReducer.candle
+const tickers = (state: RootState) => state.upbitReducer.tickers
 
 export default {
   isFetching,
   hasError,
-  candle,
+  tickers,
 }

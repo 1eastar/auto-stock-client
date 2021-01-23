@@ -1,6 +1,7 @@
 import AT from '../../constants/ActionTypes'
 import { actionCreator, actionCreatorWithPromise } from '../../utils/ReduxUtils'
 import { MainAction } from '../../types/Redux'
+import UpbitTicker from '../../models/UpbitTicker'
 
 export type Period = 'days' | 'weeks' | 'months'
 
@@ -19,6 +20,10 @@ export interface GetMinuteCandleActionPayload {
   count?: number
 }
 
+export interface ReceivedTickerActionPayload {
+  payload: UpbitTicker
+}
+
 export interface GetDWMCandleAction extends MainAction<string, GetDWMCandleActionPayload> {}
 export interface GetMinuteCandleAction extends MainAction<string, GetMinuteCandleActionPayload> {}
 
@@ -30,4 +35,6 @@ export default {
   requestGetMinuteCandle: actionCreatorWithPromise<GetMinuteCandleActionPayload>(AT.REQUEST_GET_UPBIT_MINUTE_CANDLE),
   requestGetMinuteCandleSuccess: actionCreator(AT.REQUEST_GET_UPBIT_MINUTE_CANDLE_SUCCESS),
   requestGetMinuteCandleError: actionCreator(AT.REQUEST_GET_UPBIT_MINUTE_CANDLE_ERROR),
+
+  receivedTickerData: actionCreator<ReceivedTickerActionPayload>(AT.RECEIVED_TICKER_DATA),
 }
