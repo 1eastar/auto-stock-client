@@ -25,18 +25,14 @@ function App() {
   const isLoading = useSelector(upbitSelector.isFetching)
   const tickerList = useSelector(upbitSelector.tickers)
 
-  const handleSocketMessageCallback = useCallback((data) => {
-
-  }, [])
-
   useEffect(() => {
     if (requestType === 'socket') {
-      dispatch(WebSocketActions.connectWebSocket({ messageCallback: handleSocketMessageCallback }))
+      dispatch(WebSocketActions.connectWebSocket())
     } else {
       SocketService.disconnect()
     }
     return () => { SocketService.disconnect() }
-  }, [dispatch, requestType, WebSocketActions, handleSocketMessageCallback])
+  }, [dispatch, requestType, WebSocketActions])
 
   const handleInputChange = useCallback((e) => {
     switch(e.target.name) {
@@ -67,7 +63,6 @@ function App() {
   const headerColumn = useMemo(() => {
     if (tickerList.toArray().length === 0) { return null }
 
-console.log(tickerList.toArray()[0][1])
     return Object.keys(tickerList.toArray()[0][1])
   }, [tickerList])
   // TODO: 데이터 확인을 위한 임시 코드, 추후 리팩토링 필요
@@ -141,8 +136,8 @@ console.log(tickerList.toArray()[0][1])
             </tr>
           </thead>
           <tbody>
-            { tickerList.map((ticker, i) => {
-              const rowValues = Object.values<string>(ticker.toJS())
+            { tickerList.toArray().map((tickerKVArray, i) => {
+              const rowValues = Object.values(tickerKVArray[1])
               return (
                 <tr key={i} style={{fontSize: 11, fontWeight: 400}}>
                   { rowValues.map((v, i) => (

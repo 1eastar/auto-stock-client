@@ -48,10 +48,10 @@ export default (state = upbitReducerInitialState, action): UpbitReducerState => 
       return {
         ...state,
         tickers: state.tickers.withMutations((map) => {
-          _.get(action, 'payload', [])
-            .forEach((ticker: UpbitTicker) => {
-              map.set(ticker.timestamp.toString(), ticker)
-            })
+          const ticker = _.get(action, 'payload', {})
+          if (_.has(ticker, 'timestamp')) {
+            map.set(ticker.timestamp.toString(), ticker)
+          }
         })
       }
     

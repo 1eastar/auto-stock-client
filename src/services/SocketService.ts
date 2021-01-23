@@ -31,11 +31,8 @@ class SocketService {
   private onReceiveMessage(callback) {
     return (event) => {
       try {
-        // var str = message.toString('utf-8')
-        // var json = JSON.parse(str)
         var enc = new TextDecoder("utf-8")
         var arr = new Uint8Array(event.data)
-        console.log('new message :', enc.decode(arr))
         callback(JSON.parse(enc.decode(arr)))
       } catch (e) {
           console.log('Error: ', e)
