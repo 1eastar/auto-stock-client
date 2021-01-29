@@ -66,6 +66,12 @@ function App() {
   }, [tickerList])
   // TODO: 데이터 확인을 위한 임시 코드, 추후 리팩토링 필요
   return (
+    <React.Profiler id="test1" 
+    onRender={(...args) => {
+      const { [1]: phase, [2]: actualDuration } = args;
+
+      console.log({ phase, actualDuration })
+    }}>
     <div>
       <h3>UPBIT stock data test</h3>
       {(requestType === 'api') ? (
@@ -149,6 +155,7 @@ function App() {
         </table>
       ) }
     </div>
+    </React.Profiler>
   )
 }
 
