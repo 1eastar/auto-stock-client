@@ -6,8 +6,8 @@ function getStyleByButtonType(type?: ButtonType | string | null) {
   switch (type) {
     case ButtonType.GREEN:
       return css`
-        /* background: ${({ theme }) => theme.colors.jjadagreen};
-        color: ${({ theme }) => theme.colors.jjadablue}; */
+        background: ${({ theme }) => theme.colors.jjadagreen};
+        color: ${({ theme }) => theme.colors.jjadablue};
       `
 
     case ButtonType.DEFAULT:
