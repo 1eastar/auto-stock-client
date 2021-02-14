@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { loader } from 'Styles/mixins'
+
 const ContentWrapper = styled.div`
   display: inline-flex;
   align-items: center;
@@ -26,21 +28,10 @@ const Loader = styled.div`
   justify-content: center;
 
   &::after {
+    ${loader(14, 2, 'grey', 0.6)}
     content: '';
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: solid 2px grey;
-    border-top-color: transparent;
     border-right-color: transparent;
-    border-radius: 50%;
-    animation: rotate .6s infinite linear;
-    transform-origin: 50% 50%;
-
-    @keyframes rotate {
-      0%    { transform: rotate(0deg); }
-      100%  { transform: rotate(360deg); }
-    }
   }
 `
 
