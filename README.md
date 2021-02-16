@@ -1,4 +1,4 @@
-# stock auto trading
+# stock auto trading (ing)
 client project for auto trading 
 
 ## Install node modules
